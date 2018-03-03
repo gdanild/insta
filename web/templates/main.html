@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Публикация вашего кода!</title>
+</head>
+<body bgcolor=#8B4513>
+<body>
+    <h1>Опубликуйте свой код</h1>
+    <h2>Отправить код</h2>
+
+    <form action="/" method="POST">
+        <div>{{ form.author.label}}            {{ form.author}}</div>
+        <div>{{ form.message.label}}           {{form.message}}</div>
+        {% if form.message.errors %}
+            {% for error in form.message.errors %}
+            <div style="color: red;">{{ error }}</div>
+            {% endfor %}
+        {% endif %}
+        {{ form.submit }}
+    </form>
+
+    <p><a href="/about_us">О проекте</a></p>
+</body>
+</html>
