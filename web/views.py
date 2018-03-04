@@ -4,11 +4,14 @@ from web.forms import AddPostForm
 from web.models import Post
 from .InstagramAPI import InstagramAPI
 
+api = ""
+
 def InList(a):
     res = []
     for i in a:
         res.append(i["username"])
     return res
+
 
 @app.route('/', methods=['GET', 'POST'])
 def main():
@@ -17,6 +20,7 @@ def main():
 
 @app.route('/result', methods=['GET', 'POST'])
 def lol():
+    global api
     form = AddPostForm(csrf_enabled=False)
     if form.validate_on_submit():
         data = [form.author.data,form.message.data]
@@ -28,7 +32,6 @@ def lol():
             for i in b:
                 if a.count(i) == 0:
                     res.append(i)
-            print (res)
             #print("Подписчики: {}\nПодписки: {}".format(a,b))
             print("Login succes!")
             return render_template('result.html',users=res)
@@ -36,3 +39,11 @@ def lol():
             print("Can't login!")
             return render_template('main.html', form=form, lol=0)
     return redirect("/")
+
+@app.route('/unfollow/<id_user>', methods=['POST'])
+def unf(id_user):
+    global api
+    api.searchUsername(id_user)
+    a = api.LastJson['user']['pk']
+    api.unfollow(a)
+    print(api.LastJson)
