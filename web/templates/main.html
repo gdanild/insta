@@ -5,8 +5,8 @@
 </head>
 <body bgcolor=#C0C0C0>
 <body>
-    <h1>Опубликуйте свой код</h1>
-    <h2>Отправить код</h2>
+    <h1>Insta</h1>
+    <h2>Check folow</h2>
 
     <form action="/" method="POST">
         <div>{{ form.author.label}} {{ form.author}}</div>
@@ -16,6 +16,11 @@
 
     {% if lol == 0%}
     <h1>Не правильные данные</h1>
+
+    {% elif lol == 3%}
+
+    <div> {{users}} </div>
+
     {% endif %}
 
     <p><a href="/about_us">О проекте</a></p>
