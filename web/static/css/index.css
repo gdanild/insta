@@ -1,0 +1,75 @@
+main{
+    margin-top: 60px;
+    position: relative;
+    min-height: calc(100vh - 140px);
+    box-sizing: border-box;
+    color: #F5F5F5;
+    height: auto;
+}
+.main_header h2{
+    font-size: 3rem;
+    margin: 10px auto;
+    text-align:center;
+}
+.main_header h2{
+    font-size: 3rem;
+    margin: 10px;
+}
+label{
+    font-size: 0.9rem;
+    display: block;
+    margin: 20px 10%;
+}
+input{
+    background-color: hsl(0, 0%, 99%);
+    border: thin solid lightgray;
+    height: 30px;
+    
+    padding: 5px 10px;
+    border-radius: 5px;
+  
+}
+button, input[type='button'], input[type='submit']
+{
+    border-radius: 5px;
+    height: 40px;
+    border: none;
+    padding: 0;
+}
+button:focus, input[type='button']:focus, input[type='submit']:focus
+{
+    outline: none;
+    box-shadow: none;
+    border: none;
+}
+
+input:focus{
+    border-color: #2188ff;
+    outline: none;
+    box-shadow: inset 0 1px 2px rgba(27,31,35,0.075), 0 0 0 0.2em rgba(3,102,214,0.3);
+}
+
+.form-button
+{
+    cursor: pointer;
+    -webkit-transition: 0.2s;
+    -moz-transition: 0.2s;
+    -o-transition: 0.2s;
+    transition: 0.2;
+}
+
+.login_form input{
+    width: 80%;
+    margin: 20px 10%;
+    box-sizing: border-box;
+    display: block;
+}
+.login_form input[type=submit]{
+    display:  block;
+    width: 170px;
+    margin: 20px auto;
+    background: #D9C036;
+    font-size: 1.5rem;
+    height: 50px;
+    border: thin solid hsl(51, 68%, 35%);
+ }

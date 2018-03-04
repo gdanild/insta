@@ -1,27 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Публикация вашего кода!</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-theme.css') }}">
+
+    <title>insta check!</title>
 </head>
 <body bgcolor=#C0C0C0>
 <body>
-    <h1>Insta</h1>
-    <h2>Check folow</h2>
+    <div class = "container">
+        <div class = "row">
+            <div class = "col-md-6">
+                LOL
+            </div>
+            <div class = "col-md-6">
+                <h1>Insta</h1>
+                <h2>Check folow</h2>
 
-    <form action="/" method="POST">
-        <div>{{ form.author.label}} {{ form.author}}</div>
-        <div>{{ form.message.label}} {{ form.message }}</div>
-        {{ form.submit }}
-    </form>
+                <form action="/" method="POST">
+                  <div class="form-group">
+                      {{AddPostForm.author.label(class="form-label")}}
+                      {{AddPostForm.author(class="form-control", placeholder="Dmitry Sluch")}}
 
-    {% if lol == 0%}
-    <h1>Не правильные данные</h1>
 
-    {% elif lol == 3%}
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input class="form-control" id="exampleInputPassword1" placeholder="Password">
+                  </div>
+                  <button type="submit" class="btn btn-primary">Check</button>
+                </form>
 
-    <div> {{users}} </div>
+                {% if lol == 0%}
+                <div class="alert alert-warning" role="alert">
+                    Please check login or password!
+                </div>
+                {% elif lol == 3%}
+                <div> {{users}} </div>
+                {% endif %}
+            </div>
+        </div>
 
-    {% endif %}
+    </div>
 
     <p><a href="/about_us">О проекте</a></p>
  <!-- Optional JavaScript -->
