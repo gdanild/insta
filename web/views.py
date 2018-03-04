@@ -13,6 +13,11 @@ def InList(a):
 @app.route('/', methods=['GET', 'POST'])
 def main():
     form = AddPostForm(csrf_enabled=False)
+    return render_template('main.html', form=form, lol=1)
+
+@app.route('/result', methods=['GET', 'POST'])
+def lol():
+    form = AddPostForm(csrf_enabled=False)
     if form.validate_on_submit():
         data = [form.author.data,form.message.data]
         api = InstagramAPI(data[0], data[1])
@@ -26,8 +31,8 @@ def main():
             print (res)
             #print("Подписчики: {}\nПодписки: {}".format(a,b))
             print("Login succes!")
-            return render_template('main.html', form=form, lol=3,users=res)
+            return render_template('result.html',users=res)
         else:
             print("Can't login!")
             return render_template('main.html', form=form, lol=0)
-    return render_template('main.html', form=form, lol=1)
+    return redirect("/")

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-theme.css') }}">
+
+    <title>check result!</title>
+</head>
+<body>
+    <div class = "container">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">User</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for i in users %}
+            <tr>
+              <th scope="row">{{users.index(i)}}</th>
+              <td>{{i}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+    </div>
+</body>
+</html>
