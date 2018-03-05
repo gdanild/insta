@@ -15,7 +15,8 @@ def InList(a):
 @app.route('/', methods=['GET', 'POST'])
 def main():
     form = AddPostForm(csrf_enabled=False)
-    return render_template('main.html', form=form, lol=1)
+    text = "Сервис, который ищет не взаимные подписки :)"
+    return render_template('main.html', form=form, lol=1,text = text)
 
 @app.route('/result', methods=['GET', 'POST'])
 def result():
