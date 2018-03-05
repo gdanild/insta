@@ -1,7 +1,6 @@
 from flask import redirect, render_template
 from web import app
 from web.forms import AddPostForm
-from web.models import Post
 from .InstagramAPI import InstagramAPI
 
 api = ""
@@ -47,3 +46,4 @@ def unf(id_user):
     a = api.LastJson['user']['pk']
     api.unfollow(a)
     print(api.LastJson)
+    return
