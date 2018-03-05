@@ -18,7 +18,7 @@ def main():
     return render_template('main.html', form=form, lol=1)
 
 @app.route('/result', methods=['GET', 'POST'])
-def lol():
+def result():
     global api
     form = AddPostForm(csrf_enabled=False)
     if form.validate_on_submit():
@@ -39,8 +39,12 @@ def lol():
             return render_template('main.html', form=form, lol=0)
     return redirect("/")
 
+@app.route('/about_us', methods=['GET', 'POST'])
+def about_us():
+    return render_template('about_us.html')
+
 @app.route('/unfollow/<id_user>', methods=['POST'])
-def unf(id_user):
+def unfollow(id_user):
     global api
     api.searchUsername(id_user)
     a = api.LastJson['user']['pk']
