@@ -30,7 +30,6 @@
     </script>
     <title>insta check!</title>
 </head>
-<body bgcolor=#C0C0C0>
 <body>
     <div class = "bg">
         <div class = "container">
@@ -55,26 +54,15 @@
                         <button type="submit" class="btn btn-success col-sm-4 col-form-label">Check</button>
                         <div class="col-md-8">
 
-                            <a href="#" data-placement="bottom"  data-toggle="popover" title="Что это ?" data-content="{{text}}">Что это такое ?</a>
+                            <a href="#" data-placement="bottom"  data-toggle="popover" title="Что это ?" data-content="Сервис, который ищет не взаимные подписки :)">Что это такое ?</a>
 
                         </div>
                       </div>
 
-
-
-
-
-
-
-
                     </form>
 
-                    {% if lol == 0%}
-                    <div class="alert alert-warning" role="alert">
-                        Please check login or password!
-                    </div>
-                    {% elif lol == 3%}
-                    <div> {{users}} </div>
+                    {% if error_login == True%}
+                    <div class="alert alert-warning" role="alert">Please check login or password</div>
                     {% endif %}
                 </div>
                 <div class = "col-md-4">

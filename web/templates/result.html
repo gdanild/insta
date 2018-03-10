@@ -35,7 +35,9 @@
             <tr id = "{{i+'_any'}}">
               <td>{{users.index(i)}}</td>
               <td>{{i}}</td>
+              {% if status == True %}
               <td><a id = "{{i}}" class="btn btn-primary" role="button">Unfollow</a></td>
+              {% endif %}
             </tr>
             {% endfor %}
           </tbody>
