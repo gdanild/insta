@@ -43,10 +43,10 @@
                           {{form.message(class="form-control", placeholder="password")}}
                       </div>
                         <button type="submit" class="btn btn-success col-form-label form-control form-control-lg">Check</button>
-                        <a href="/about_us" title="Что это ?">Что это такое ?</a>
+                        <a href="/about_us">Что это такое ?</a>
                     </form>
                     {% if error_login == True%}
-                    <div class="alert alert-warning" role="alert">Please check login or password</div>
+                    <div class="alert alert-warning" role="alert">{{ mes }}</div>
                     {% endif %}
                 </div>
                 <div class = "col-md-4">

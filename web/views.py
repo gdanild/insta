@@ -15,10 +15,16 @@ def InList(a):
 def GetPk(username,api):
     api.searchUsername(username)
     result = api.LastJson
-    if not result['status'] == 'fail':
-        return result["user"]["pk"]
+    if (not result['status'] == 'fail') and result['user']['is_private'] == False:
+        res = [result["user"]["pk"],True]
+        return res
     else:
-        raise Exception("Error username")
+        if result['status'] == 'fail':
+            res = ["Unknown user",False]
+            return res
+        elif result['user']['is_private'] == True:
+            res = ["It's a close profile",False]
+            return res
 
 def GenerateBadUsers(a,b):
     res = []
@@ -44,7 +50,7 @@ def result():
             api = InstagramAPI(data[0], data[1])
             if (not api.login()):
                 print("Can't login!")
-                return render_template('main.html', form=form, error_login=True)
+                return render_template('main.html', form=form, error_login=True, mes = "Please check login or password")
             else:
                 a = InList(api.getTotalSelfFollowers())  # Подписчики
                 b = InList(api.getTotalSelfFollowings())  # подписки
@@ -53,12 +59,16 @@ def result():
         else:
             api = InstagramAPI("stolovka.1747", "ToYwjMHa698")
             api.login()
-            a = InList(api.getTotalFollowers(GetPk(data[0],api)))
-            b = InList(api.getTotalFollowings(GetPk(data[0],api)))
+            user_id = GetPk(data[0],api)
+            if user_id[1] == True:
+                a = InList(api.getTotalFollowers(user_id[0]))
+                b = InList(api.getTotalFollowings(user_id[0]))
+            else:
+                return render_template('main.html', form=form, error_login=True, mes = user_id[0])
             #print("Подписчики: {}\nПодписки: {}".format(len(a), len(b)))
             status_unfollow_funct = False
 
-        return render_template('result.html', users=GenerateBadUsers(a, b), status = status_unfollow_funct)
+        return render_template('result.html', users=GenerateBadUsers(a, b),error_login = False, status = status_unfollow_funct)
 
 
 
