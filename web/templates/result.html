@@ -37,6 +37,12 @@
               <td>{{i}}</td>
               {% if status == True %}
               <td><a id = "{{i}}" class="btn btn-primary" role="button">Unfollow</a></td>
+              {% else %}
+              <td>
+                <span class="d-inline-block" data-toggle="popover" data-content="Disabled popover">
+                  <button class="btn btn-primary" style="pointer-events: none;" type="button" disabled>Unfollow</button>
+                </span>
+              </td>
               {% endif %}
             </tr>
             {% endfor %}
