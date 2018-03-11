@@ -22,12 +22,6 @@
         background-size: cover;
     }
     </style>
-
-    <script type="text/javascript">
-    $(document).ready(function(){
-        $('[data-toggle="popover"]').popover();
-    });
-    </script>
     <title>insta check!</title>
 </head>
 <body>
@@ -39,7 +33,6 @@
                 <div class = "col-md-4">
                     <h1>Insta</h1>
                     <h2>Check folow</h2>
-
                     <form action="/result" method="POST">
                       <div class="form-group">
                           {{form.author.label(class="form-label")}}
@@ -49,18 +42,9 @@
                           {{form.message.label(class="form-label")}}
                           {{form.message(class="form-control", placeholder="password")}}
                       </div>
-
-                      <div class="form-group row">
-                        <button type="submit" class="btn btn-success col-sm-4 col-form-label">Check</button>
-                        <div class="col-md-8">
-
-                            <a href="#" data-placement="bottom"  data-toggle="popover" title="Что это ?" data-content="Сервис, который ищет не взаимные подписки :)">Что это такое ?</a>
-
-                        </div>
-                      </div>
-
+                        <button type="submit" class="btn btn-success col-form-label form-control form-control-lg">Check</button>
+                        <a href="/about_us" title="Что это ?">Что это такое ?</a>
                     </form>
-
                     {% if error_login == True%}
                     <div class="alert alert-warning" role="alert">Please check login or password</div>
                     {% endif %}

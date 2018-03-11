@@ -21,6 +21,9 @@
     <title>check result!</title>
 </head>
 <body>
+    {% if status == False %}
+    <div class="alert alert-danger" role="alert">Вы не можете полностью пользоватся функциями, так-как не ввели пароль</div>
+    {% endif %}
     <div class = "container">
         <table class="table">
           <thead>
