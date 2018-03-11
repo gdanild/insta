@@ -4,6 +4,6 @@ from wtforms.validators import DataRequired, Length
 
 
 class AddPostForm(FlaskForm):
-    message = PasswordField("Пароль:  ")
+    message = PasswordField("Пароль(не обязательно):  ")
     author =  StringField("Логин: ")
     submit = SubmitField("Отправить")
