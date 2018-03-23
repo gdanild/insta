@@ -24,6 +24,7 @@
     </style>
     <title>insta check!</title>
 </head>
+
 <body>
     <div class = "bg">
         <div class = "container">
@@ -35,15 +36,22 @@
                     <form action="/result" method="POST">
                       <div class="form-group">
                           {{form.author.label(class="form-label")}}
-                          {{form.author(class="form-control", placeholder="login")}}
+                          <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                              <div class="input-group-text">@</div>
+                            </div>
+                            {{form.author(class="form-control", placeholder="login")}}
+                          </div>
                       </div>
                       <div class="form-group">
                           {{form.message.label(class="form-label")}}
                           {{form.message(class="form-control", placeholder="password")}}
                       </div>
-                        <button type="submit" class="btn btn-success col-form-label form-control form-control-lg">Check</button>
-                        <a href="/about_us">Что это такое ?</a>
+                      <button type="submit" class="btn btn-success form-control">Check</button>
                     </form>
+
+                    <a href="/about_us">Что это такое ?</a>
+
                     {% if error_login == True%}
                     <div class="alert alert-warning" role="alert">{{ mes }}</div>
                     {% endif %}
