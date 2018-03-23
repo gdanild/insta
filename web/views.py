@@ -69,9 +69,6 @@ def result():
             status_unfollow_funct = False
 
         return render_template('result.html', users=GenerateBadUsers(a, b),error_login = False, status = status_unfollow_funct)
-
-
-
     else:
         return redirect("/")
 

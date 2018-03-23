@@ -3,6 +3,19 @@
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+
+    <script type="text/javascript">
+        $(function() {
+            let a = 1
+            $('button').on('click', function(e) {
+                $(this).hide()
+                console.log("LOL");
+                $('img').removeClass("invisible");
+            });
+        });
+
+    </script>
+
     <style>
     body, html {
         height: 100%;
@@ -51,10 +64,12 @@
                     </form>
 
                     <a href="/about_us">Что это такое ?</a>
-
                     {% if error_login == True%}
                     <div class="alert alert-warning" role="alert">{{ mes }}</div>
                     {% endif %}
+                    <div class="text-center">
+                      <img class = "invisible w-75 p-3 rounded-circle" src="https://goo.gl/VeAqGR" alt="Загрузка...">
+                    </div>
                 </div>
                 <div class = "col-md-4">
                 </div>
