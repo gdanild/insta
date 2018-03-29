@@ -6,11 +6,12 @@
 
     <script type="text/javascript">
         $(function() {
+            $('img').hide();
             let a = 1
             $('button').on('click', function(e) {
                 $(this).hide()
                 console.log("LOL");
-                $('img').removeClass("invisible");
+                $('img').show();
             });
         });
     </script>
@@ -67,7 +68,7 @@
                     <div class="alert alert-warning" role="alert">{{ mes }}</div>
                     {% endif %}
                     <div class="text-center">
-                      <img class = "invisible w-75 p-3 rounded-circle" src="/static/images/lol.gif" alt="Загрузка...">
+                      <img class = "w-75 p-3 rounded-circle" src="/static/images/lol.gif" alt="Загрузка...">
                     </div>
                 </div>
                 <div class = "col-md-4">
