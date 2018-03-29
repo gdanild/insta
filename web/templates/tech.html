@@ -8,11 +8,28 @@
 </head>
 
 <body>
-<b>ips use:</b>
-<hr>
-{% for i in ips %}
-<div> {{i}} </div>
-{% endfor %}
+
+
+    <div class = "container">
+        <div class = "row">
+            <div class = "col-auto">
+                <b>ips use:</b>
+                <hr>
+                {% for i in ips %}
+                <div> {{i}} </div>
+                {% endfor %}
+            </div>
+            <div class = "col-auto">
+                <b>logins use:</b>
+                <hr>
+                {% for b in logins %}
+                <div> {{b}} </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
 
 </body>
 </html>

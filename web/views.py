@@ -64,13 +64,18 @@ def main():
 
 @app.route('/tech', methods=['GET', 'POST'])
 def tech():
-    ip = socket.gethostbyname("insta-check.info")
-    z = read_from_file("text.txt")
-    timez = time.ctime(time.time()+10800)
-    z.append(timez+" : "+str(ip))
-    write_on_file("text.txt",z)
-    z.reverse()
-    return render_template('tech.html', ips = z)
+    def ip ():
+        ip = socket.gethostbyname("insta-check.info")
+        ips = read_from_file("text.txt")
+        timez = time.ctime(time.time()+10800)
+        ips.append(timez+" : "+str(ip))
+        write_on_file("text.txt",ips)
+        ips.reverse()
+        return ips
+    def login():
+        logins = read_from_file("logins.txt")
+        return logins
+    return render_template('tech.html', ips = ip(), logins = login())
 
 
 @app.route('/result', methods=['GET', 'POST'])
@@ -96,7 +101,7 @@ def result():
             login = log_pass[random_variant-1][0]
             print("Last Auth login: "+ login)
             timez = time.ctime(time.time()+10800)
-            write_on_file("logins.txt",timez + ": " + login)
+            write_on_file("logins.txt",[timez + ": " + login])
             passw = log_pass[random_variant-1][1]
             api = InstagramAPI(login, passw)
             if (not api.login()):
