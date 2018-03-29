@@ -2,9 +2,13 @@ from flask import redirect, render_template
 from web import app
 from web.forms import AddPostForm
 from .InstagramAPI import InstagramAPI
+import socket,time, random
 
 api = ""
 
+#====================================================================
+#====================================================================
+#====================================================================
 
 def InList(a):
     res = []
@@ -33,11 +37,40 @@ def GenerateBadUsers(a,b):
             res.append(i)
     return res
 
+def write_on_file(file,a):
+    f = open(file, 'w')
+    for index in a:
+        f.write(index + '\n')
+    f.close()
+
+def read_from_file(file):
+    f = open(file, 'r')
+    l = [line.strip() for line in f]
+    f.close()
+    return l
+
+
+#====================================================================
+#====================================================================
+#====================================================================
+
+
+
 
 @app.route('/', methods=['GET', 'POST'])
 def main():
     form = AddPostForm(csrf_enabled=False)
     return render_template('main.html', form=form, error_login=False)
+
+@app.route('/tech', methods=['GET', 'POST'])
+def tech():
+    ip = socket.gethostbyname("insta-check.info")
+    z = read_from_file("text.txt")
+    timez = time.ctime(time.time()+10800)
+    z.append(timez+" : "+str(ip))
+    write_on_file("text.txt",z)
+    z.reverse()
+    return render_template('tech.html', ips = z)
 
 
 @app.route('/result', methods=['GET', 'POST'])
@@ -46,6 +79,7 @@ def result():
     form = AddPostForm(csrf_enabled=False)
     if form.validate_on_submit():
         data = [form.author.data, form.message.data]
+        print(data)
         if len(data[1]) != 0:
             api = InstagramAPI(data[0], data[1])
             if (not api.login()):
@@ -57,8 +91,17 @@ def result():
                 status_unfollow_funct = True
                 # print("Подписчики: {}\nПодписки: {}".format(a,b))
         else:
-            api = InstagramAPI("stolovka.1747", "ToYwjMHa698")
-            api.login()
+            log_pass = [["g.danil.d_black", "ToYwjMHa698"], ["g.danil.d","Fitabe69"],["stolovka.1747","ToYwjMHa698"]]
+            random_variant = random.randint(1,3)
+            login = log_pass[random_variant-1][0]
+            print("Last Auth login: "+ login)
+            timez = time.ctime(time.time()+10800)
+            write_on_file("logins.txt",timez + ": " + login)
+            passw = log_pass[random_variant-1][1]
+            api = InstagramAPI(login, passw)
+            if (not api.login()):
+                print("Can't login!")
+                return render_template('main.html', form=form, error_login=True, mes = "Service not work")
             user_id = GetPk(data[0],api)
             if user_id[1] == True:
                 a = InList(api.getTotalFollowers(user_id[0]))
@@ -85,4 +128,4 @@ def unfollow(id_user):
     a = api.LastJson['user']['pk']
     api.unfollow(a)
     print(api.LastJson)
-    return
+    return True
