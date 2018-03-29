@@ -64,7 +64,7 @@ def main():
 
 @app.route('/tech', methods=['GET', 'POST'])
 def tech():
-    def ip ():
+    def get_ip ():
         ip = socket.gethostbyname("insta-check.info")
         ips = read_from_file("text.txt")
         timez = time.ctime(time.time()+10800)
@@ -72,14 +72,21 @@ def tech():
         write_on_file("text.txt",ips)
         ips.reverse()
         return ips
-    def login():
+    def get_login():
         logins = read_from_file("logins.txt")
+        logins.reverse()
         return logins
-    return render_template('tech.html', ips = ip(), logins = login())
+    return render_template('tech.html', ips = get_ip(), logins = get_login())
 
 
 @app.route('/result', methods=['GET', 'POST'])
 def result():
+    def write_login(login, mes = "Good Login"):
+        timez = time.ctime(time.time() + 10800)
+        logins = read_from_file("logins.txt")
+        logins.append(timez + ": " + login + "[" + mes + "]")
+        return logins
+
     global api
     form = AddPostForm(csrf_enabled=False)
     if form.validate_on_submit():
@@ -89,8 +96,10 @@ def result():
             api = InstagramAPI(data[0], data[1])
             if (not api.login()):
                 print("Can't login!")
+                write_on_file("logins.txt", write_login(data[0], "error data"))
                 return render_template('main.html', form=form, error_login=True, mes = "Please check login or password")
             else:
+                write_on_file("logins.txt", write_login(data[0]))
                 a = InList(api.getTotalSelfFollowers())  # Подписчики
                 b = InList(api.getTotalSelfFollowings())  # подписки
                 status_unfollow_funct = True
@@ -99,19 +108,19 @@ def result():
             log_pass = [["g.danil.d_black", "ToYwjMHa698"], ["g.danil.d","Fitabe69"],["stolovka.1747","ToYwjMHa698"]]
             random_variant = random.randint(1,3)
             login = log_pass[random_variant-1][0]
-            print("Last Auth login: "+ login)
-            timez = time.ctime(time.time()+10800)
-            write_on_file("logins.txt",[timez + ": " + login])
-            passw = log_pass[random_variant-1][1]
+            passw = log_pass[random_variant - 1][1]
             api = InstagramAPI(login, passw)
             if (not api.login()):
                 print("Can't login!")
+                write_on_file("logins.txt", write_login(data[0], "Service not work"))
                 return render_template('main.html', form=form, error_login=True, mes = "Service not work")
             user_id = GetPk(data[0],api)
             if user_id[1] == True:
                 a = InList(api.getTotalFollowers(user_id[0]))
                 b = InList(api.getTotalFollowings(user_id[0]))
+                write_on_file("logins.txt", write_login(data[0], "only login"))
             else:
+                write_on_file("logins.txt", write_login(data[0], user_id[0]))
                 return render_template('main.html', form=form, error_login=True, mes = user_id[0])
             #print("Подписчики: {}\nПодписки: {}".format(len(a), len(b)))
             status_unfollow_funct = False
