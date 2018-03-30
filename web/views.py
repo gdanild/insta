@@ -1,8 +1,8 @@
-from flask import redirect, render_template
+from flask import redirect, render_template, request
 from web import app
 from web.forms import AddPostForm
 from .InstagramAPI import InstagramAPI
-import socket,time, random
+import socket,time, random, requests, json
 
 api = ""
 
@@ -49,6 +49,13 @@ def read_from_file(file):
     f.close()
     return l
 
+def checkRecaptcha(response):
+    payload = (('secret', '6LdW-k8UAAAAAAQn0UQBWtgC4Ds9yjTUBsfS0LHK'), ('response', response))
+    r = requests.post('https://www.google.com/recaptcha/api/siteverify', data=payload)
+    json_text = json.loads(r.text)
+    m = json_text["success"]
+    return m
+
 
 #====================================================================
 #====================================================================
@@ -90,6 +97,9 @@ def result():
     global api
     form = AddPostForm(csrf_enabled=False)
     if form.validate_on_submit():
+        google_cap = request.form.get('g-recaptcha-response')
+        if not checkRecaptcha(google_cap):
+            return render_template('main.html', form=form, error_login=True, mes = "You did not enter captcha")
         data = [form.author.data, form.message.data]
         print(data)
         if len(data[1]) != 0:

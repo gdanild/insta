@@ -36,6 +36,7 @@
     }
     </style>
     <title>insta check!</title>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
 </head>
 
 <body>
@@ -60,6 +61,8 @@
                           {{form.message.label(class="form-label")}}
                           {{form.message(class="form-control", placeholder="password")}}
                       </div>
+                      <div class="g-recaptcha" data-sitekey="6LdW-k8UAAAAAOw0EXdOvE2oAl_VQ4PogXo35X6d"></div>
+
                       <button type="submit" class="btn btn-success form-control">Check</button>
                     </form>
 
