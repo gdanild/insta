@@ -28,14 +28,12 @@ def GetPk(username,api):
     result = api.LastJson
     if (not result['status'] == 'fail') and result['user']['is_private'] == False:
         res = [result["user"]["pk"],True]
-        return res
     else:
         if result['status'] == 'fail':
             res = ["Unknown user",False]
-            return res
         elif result['user']['is_private'] == True:
             res = ["It's a close profile",False]
-            return res
+    return res
 
 def GenerateBadUsers(a,b):
     return list(set(b) - set(a))
