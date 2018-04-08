@@ -6,6 +6,13 @@ import socket,time, random, requests, json
 
 api = ""
 
+log_pass = [["g.danil.d_black", "ToYwjMHa698"], ["g.danil.d","Fitabe69"],["stolovka.1747","ToYwjMHa698"]]
+random_variant = random.randint(1,3)
+login = log_pass[random_variant-1][0]
+passw = log_pass[random_variant - 1][1]
+api_no_my = InstagramAPI(login, passw)
+yes_login = api_no_my.login()
+
 #====================================================================
 #====================================================================
 #====================================================================
@@ -31,11 +38,7 @@ def GetPk(username,api):
             return res
 
 def GenerateBadUsers(a,b):
-    res = []
-    for i in b:
-        if a.count(i) == 0:
-            res.append(i)
-    return res
+    return list(set(b) - set(a))
 
 def write_on_file(file,a):
     f = open(file, 'w')
@@ -72,7 +75,7 @@ def main():
 @app.route('/tech', methods=['GET', 'POST'])
 def tech():
     def get_ip ():
-        ip = socket.gethostbyname("insta-check.info")
+        ip = socket.gethostbyname("gdanild.pythonanywhere.com")
         ips = read_from_file("text.txt")
         timez = time.ctime(time.time()+10800)
         ips.append(timez+" : "+str(ip))
@@ -115,19 +118,14 @@ def result():
                 status_unfollow_funct = True
                 # print("Подписчики: {}\nПодписки: {}".format(a,b))
         else:
-            log_pass = [["g.danil.d_black", "ToYwjMHa698"], ["g.danil.d","Fitabe69"],["stolovka.1747","ToYwjMHa698"]]
-            random_variant = random.randint(1,3)
-            login = log_pass[random_variant-1][0]
-            passw = log_pass[random_variant - 1][1]
-            api = InstagramAPI(login, passw)
-            if (not api.login()):
+            if (not yes_login):
                 print("Can't login!")
                 write_on_file("logins.txt", write_login(data[0], "Service not work"))
                 return render_template('main.html', form=form, error_login=True, mes = "Service not work")
-            user_id = GetPk(data[0],api)
+            user_id = GetPk(data[0],api_no_my)
             if user_id[1] == True:
-                a = InList(api.getTotalFollowers(user_id[0]))
-                b = InList(api.getTotalFollowings(user_id[0]))
+                a = InList(api_no_my.getTotalFollowers(user_id[0]))
+                b = InList(api_no_my.getTotalFollowings(user_id[0]))
                 write_on_file("logins.txt", write_login(data[0], "only login"))
             else:
                 write_on_file("logins.txt", write_login(data[0], user_id[0]))
