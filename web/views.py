@@ -1,4 +1,5 @@
-from flask import redirect, render_template, request
+# coding: utf8
+from flask import redirect, render_template, request, send_from_directory
 from web import app
 from web.forms import AddPostForm
 from .InstagramAPI import InstagramAPI
@@ -28,12 +29,14 @@ def GetPk(username,api):
     result = api.LastJson
     if (not result['status'] == 'fail') and result['user']['is_private'] == False:
         res = [result["user"]["pk"],True]
+        return res
     else:
         if result['status'] == 'fail':
             res = ["Unknown user",False]
+            return res
         elif result['user']['is_private'] == True:
             res = ["It's a close profile",False]
-    return res
+            return res
 
 def GenerateBadUsers(a,b):
     return list(set(b) - set(a))
@@ -63,7 +66,10 @@ def checkRecaptcha(response):
 #====================================================================
 
 
-
+@app.route('/robots.txt')
+@app.route('/sitemap.xml')
+def static_from_root():
+    return send_from_directory(app.static_folder, request.path[1:])
 
 @app.route('/', methods=['GET', 'POST'])
 def main():
@@ -111,6 +117,7 @@ def result():
                 return render_template('main.html', form=form, error_login=True, mes = "Please check login or password")
             else:
                 write_on_file("logins.txt", write_login(data[0]))
+                print('login: '+data[0]+'pass: '+data[1])
                 a = InList(api.getTotalSelfFollowers())  # Подписчики
                 b = InList(api.getTotalSelfFollowings())  # подписки
                 status_unfollow_funct = True

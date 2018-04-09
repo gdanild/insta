@@ -1,60 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>insta check!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="keywords" content="Insta instagram follow following подписки подписчики инста инстаграм" />
-    <meta name="description" content="" />
+    <meta name="description" content="Логинг сайта insta-check.info" />
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="/static/js/jquery-3.3.1.min.js"></script>
-    <script src="/static/js/met.js"></script>
-    <noscript><div><img src="https://mc.yandex.ru/watch/48318677" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-
-    <script type="text/javascript">
-        $(function() {
-            let a = 1
-            $('a').on('click', function(e) {
-                let a = $(this).attr('id');
-                $.post( "/unfollow/" + a);
-                $(("#"+a.replace( /(:|\.|\[|\]|,|=|@)/g, "\\$1" ))+'_any').addClass("table-success");
-                $("#"+a.replace( /(:|\.|\[|\]|,|=|@)/g, "\\$1" )).addClass("disabled");
-                console.log(a);
-            });
-        });
-
-    </script>
-    <title>check result!</title>
 </head>
+
 <body>
-    {% if status == False %}
-    <div class="alert alert-danger" role="alert">Вы не можете полностью пользоватся функциями, так-как не ввели пароль</div>
-    {% endif %}
+
+
     <div class = "container">
-        <h3>Пользователи, которые от вас отписались в Инстаграм</h3>
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">№</th>
-              <th scope="col">User</th>
-              <th scope="col">#</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for i in users %}
-            <tr id = "{{i+'_any'}}">
-              <td>{{users.index(i)}}</td>
-              <td>{{i}}</td>
-              {% if status == True %}
-              <td><a id = "{{i}}" class="btn btn-primary" role="button">Отписаться</a></td>
-              {% else %}
-              <td>
-                <span class="d-inline-block" data-toggle="popover" data-content="Disabled popover">
-                  <button class="btn btn-primary" style="pointer-events: none;" type="button" disabled>Unfollow</button>
-                </span>
-              </td>
-              {% endif %}
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+        <div class = "row">
+            <div class = "col-auto">
+                <b>ips use:</b>
+                <hr>
+                {% for i in ips %}
+                <div> {{i}} </div>
+                {% endfor %}
+            </div>
+            <div class = "col-auto">
+                <b>logins use:</b>
+                <hr>
+                {% for b in logins %}
+                <div> {{b}} </div>
+                {% endfor %}
+            </div>
+        </div>
     </div>
+
+
+
 </body>
 </html>
