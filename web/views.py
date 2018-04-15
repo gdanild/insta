@@ -5,14 +5,39 @@ from web.forms import AddPostForm
 from .InstagramAPI import InstagramAPI
 import socket,time, random, requests, json
 
-api = ""
+class for_apiClass:
+    log_pass = [{"login": "g.danil.d_black", "pass": "ToYwjMHa698"},
+                {"login": "g.danil.d", "pass": "Fitabe69"},
+                {"login": "stolovka.1747", "pass": "ToYwjMHa698"}]
+    counter = 0
+    def __init__(self):
+        self.login = self.log_pass[self.counter]["login"]
+        self.passw = self.log_pass[self.counter]["pass"]
 
-log_pass = [["g.danil.d_black", "ToYwjMHa698"], ["g.danil.d","Fitabe69"],["stolovka.1747","ToYwjMHa698"]]
-random_variant = random.randint(1,3)
-login = log_pass[random_variant-1][0]
-passw = log_pass[random_variant - 1][1]
-api_no_my = InstagramAPI(login, passw)
-yes_login = api_no_my.login()
+    def log(self):
+        api_login = InstagramAPI(self.login, self.passw)
+        yes_login = api_login.login()
+        if yes_login:
+            return api_login
+        else:
+            return False
+
+    def smena(self):
+        if self.counter == 2:
+            self.counter = 0
+        else:
+            self.counter += 1
+        self.login = self.log_pass[self.counter]["login"]
+        self.passw = self.log_pass[self.counter]["pass"]
+        return True
+
+    def print(self):
+        print("login: {}\npass: {}".format(self.login, self.passw))
+
+
+example = for_apiClass()
+api_without_login = example.log()
+example.print()
 
 #====================================================================
 #====================================================================
@@ -100,7 +125,7 @@ def result():
         logins.append(timez + ": " + login + "[" + mes + "]")
         return logins
 
-    global api
+    global api_without_login
     form = AddPostForm(csrf_enabled=False)
     if form.validate_on_submit():
         google_cap = request.form.get('g-recaptcha-response')
@@ -122,14 +147,19 @@ def result():
                 status_unfollow_funct = True
                 # print("Подписчики: {}\nПодписки: {}".format(a,b))
         else:
-            if (not yes_login):
-                print("Can't login!")
-                write_on_file("logins.txt", write_login(data[0], "Service not work"))
-                return render_template('main.html', form=form, error_login=True, mes = "Service not work")
-            user_id = GetPk(data[0],api_no_my)
+            if (not api_without_login):
+                example.smena()
+                api_without_login = example.log()
+                if api_without_login == False:
+                    example.print()
+                    print("Can't login!")
+                    write_on_file("logins.txt", write_login(data[0], "Service not work"))
+                    return render_template('main.html', form=form, error_login=True, mes = "Service not work")
+
+            user_id = GetPk(data[0],api_without_login)
             if user_id[1] == True:
-                a = InList(api_no_my.getTotalFollowers(user_id[0]))
-                b = InList(api_no_my.getTotalFollowings(user_id[0]))
+                a = InList(api_without_login.getTotalFollowers(user_id[0]))
+                b = InList(api_without_login.getTotalFollowings(user_id[0]))
                 write_on_file("logins.txt", write_login(data[0], "only login"))
             else:
                 write_on_file("logins.txt", write_login(data[0], user_id[0]))
